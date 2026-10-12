@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Алексей Говоров</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: engineering-drawing sheet. Heavy condensed type, ruled cells like a title block, one machine-tool yellow accent on graphite. Single dark look by design. */
+:root {
+  color-scheme: dark;
+  --bg: #0f1011;
+  --panel: #161819;
+  --line: #2c3033;
+  --fg: #e8eaea;
+  --muted: #8d9498;
+  --accent: #f2b705;
+  --font-display: 'Fira Sans Extra Condensed', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --gutter: clamp(16px, 4vw, 48px);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+html { scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: var(--gutter); }
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Header */
+.top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding-block: 12px; }
+.mark { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
+.mark span { color: var(--accent); }
+.nav { display: flex; gap: 4px 20px; flex-wrap: wrap; }
+.nav a { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--muted); padding-block: 4px; border-bottom: 2px solid transparent; }
+.nav a:hover { color: var(--fg); border-bottom-color: var(--accent); }
+.lang { display: flex; border: 1px solid var(--line); }
+.lang button { padding: 6px 12px; border: 0; background: transparent; color: var(--muted); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; cursor: pointer; }
+.lang button:hover { color: var(--fg); }
+.lang button[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+.hazard { height: 8px; background: repeating-linear-gradient(-45deg, var(--accent) 0 10px, var(--bg) 10px 20px); }
+
+/* Hero */
+.hero { padding-block: clamp(32px, 6vw, 72px) clamp(32px, 5vw, 56px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.8fr); gap: clamp(24px, 5vw, 64px); align-items: start; }
+.eyebrow { display: block; margin-bottom: 20px; color: var(--accent); }
+h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(3.4rem, 11.5vw, 9rem);
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+h1 .patr { display: block; margin-top: 18px; font-weight: 600; font-size: clamp(1.4rem, 3.6vw, 2.4rem); letter-spacing: 0.06em; color: var(--muted); }
+.lead { max-width: 58ch; margin: 28px 0 0; font-size: clamp(1.02rem, 1.6vw, 1.18rem); color: var(--fg); }
+
+.block { margin: 32px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.block > div { padding: 12px 14px 14px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; }
+.block dt { margin: 0 0 4px; }
+.block dd { margin: 0; font-size: 0.92rem; line-height: 1.4; }
+
+.photo { position: relative; margin: 0; border: 1px solid var(--line); background: var(--panel); }
+.photo img { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; object-position: 50% 30%; filter: grayscale(0.3) contrast(1.06); }
+.photo::before, .photo::after { content: ""; position: absolute; width: 28px; height: 28px; border: 3px solid var(--accent); pointer-events: none; }
+.photo::before { top: -8px; left: -8px; border-right: 0; border-bottom: 0; }
+.photo::after { bottom: -8px; right: -8px; border-left: 0; border-top: 0; }
+.photo figcaption { padding: 8px 12px; border-top: 1px solid var(--line); }
+
+/* Key figures */
+.figures { border-block: 1px solid var(--line); background: var(--panel); }
+.figures ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.figures li { padding: 24px 20px 26px 0; }
+.figures li + li { padding-left: 20px; border-left: 1px solid var(--line); }
+.figures .n { display: block; font-family: var(--font-display); font-weight: 800; font-size: clamp(2.6rem, 5.4vw, 4.4rem); line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+.figures .l { display: block; margin-top: 10px; font-size: 0.92rem; line-height: 1.4; max-width: 24ch; }
+
+/* Sections */
+.sec { padding-block: clamp(40px, 7vw, 88px); border-bottom: 1px solid var(--line); }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin-bottom: clamp(24px, 4vw, 48px); }
+h2 { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 0.95; text-transform: uppercase; letter-spacing: 0.01em; }
+
+/* Career */
+.role { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); gap: 16px clamp(20px, 4vw, 56px); padding-block: clamp(24px, 4vw, 40px); border-top: 1px solid var(--line); }
+.role:first-of-type { border-top: 3px solid var(--accent); }
+.when { display: flex; flex-direction: column; gap: 6px; }
+.when .big { font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; line-height: 1.05; color: var(--fg); letter-spacing: 0.02em; }
+h3 { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.02; text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
+.title { margin: 8px 0 0; font-weight: 600; font-size: 1.08rem; color: var(--accent); }
+.where { margin-top: 4px; }
+.summary { max-width: 64ch; margin: 18px 0 0; color: #c9cdcf; }
+
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px clamp(24px, 4vw, 48px); margin-top: 28px; }
+.cols h4 { margin: 0 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.list li { position: relative; padding-left: 20px; font-size: 0.97rem; line-height: 1.5; }
+.list li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 8px; height: 8px; background: var(--accent); }
+.list strong { font-weight: 600; color: #fff; }
+.list.one { max-width: 72ch; }
+.list.one + .list.one { margin-top: 0; }
+
+/* Education and skills */
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px clamp(24px, 4vw, 56px); margin-top: clamp(32px, 5vw, 56px); padding-top: clamp(24px, 4vw, 40px); border-top: 1px solid var(--line); }
+.facts h4 { margin: 0 0 12px; }
+.edu { margin: 0; font-size: 0.98rem; }
+.edu strong { display: block; font-weight: 600; }
+.edu span { color: var(--muted); }
+.skills { display: grid; gap: 22px; margin-top: 28px; }
+.skills h4 { margin: 0 0 10px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.tags li { padding: 5px 10px; border: 1px solid var(--line); background: var(--panel); font-size: 0.85rem; line-height: 1.3; }
+
+/* About */
+.about { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 28px clamp(24px, 5vw, 64px); align-items: start; }
+.about p { margin: 0 0 16px; max-width: 58ch; font-size: 1.08rem; }
+.credo { margin: 0; padding: 4px 0 4px 24px; border-left: 3px solid var(--accent); }
+.about .credo-text { margin: 12px 0 0; max-width: none; font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 4.6vw, 3.4rem); line-height: 1; text-transform: uppercase; text-wrap: balance; }
+@media (max-width: 880px) { .about { grid-template-columns: minmax(0, 1fr); } }
+
+/* Hobbies */
+.hobbies { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px clamp(24px, 4vw, 48px); }
+.hobby { border-top: 3px solid var(--accent); padding-top: 20px; min-width: 0; }
+.hobby .num { display: block; font-family: var(--font-display); font-weight: 800; font-size: clamp(2.6rem, 5vw, 3.8rem); line-height: 0.95; color: var(--accent); font-variant-numeric: tabular-nums; }
+.hobby h3 { margin-top: 10px; font-size: clamp(1.6rem, 2.6vw, 2rem); }
+.hobby p { margin: 14px 0 0; max-width: 56ch; color: #c9cdcf; }
+.hobby .tags { margin-top: 18px; }
+@media (max-width: 1000px) { .hobbies { grid-template-columns: minmax(0, 1fr); } }
+
+/* Contacts */
+.contacts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.contact { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; padding: 20px; border: 1px solid var(--line); background: var(--panel); }
+.contact svg { width: 28px; height: 28px; margin-bottom: 4px; color: var(--accent); fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: miter; }
+.contact .value { max-width: 100%; font-family: var(--font-display); font-weight: 800; font-size: clamp(1.2rem, 2.2vw, 1.9rem); line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.act { display: inline-block; margin-top: 10px; padding: 8px 14px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: pointer; }
+.act:hover { background: var(--accent); color: var(--bg); }
+@media (max-width: 880px) { .contacts { grid-template-columns: minmax(0, 1fr); } }
+
+.foot { padding-block: 28px; }
+.foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+
+@media (max-width: 880px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .photo { max-width: 360px; }
+  .figures ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .figures li:nth-child(3) { padding-left: 0; border-left: 0; }
+  .figures li:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .role { grid-template-columns: minmax(0, 1fr); }
+  .when { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+  .cols, .facts { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .block { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nav { gap: 2px 14px; }
+  .nav a { font-size: 0.72rem; }
+  .figures li { padding-right: 12px; }
+  .figures li + li { padding-left: 14px; }
+  .figures li:nth-child(3) { padding-left: 0; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top" data-i="mark">А. Говоров<span>.</span></a>
+    <nav class="nav" aria-label="Разделы" data-ia="aria-label:nav.aria">
+      <a href="#about" data-i="nav.about">Обо мне</a>
+      <a href="#career" data-i="nav.career">Карьера</a>
+      <a href="#hobby" data-i="nav.hobby">Хобби и увлечения</a>
+      <a href="#contacts" data-i="nav.contacts">Контакты</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Язык" data-ia="aria-label:lang.aria">
+      <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+  <div class="hazard" aria-hidden="true"></div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="mono eyebrow" data-i="hero.eyebrow">Руководитель производственных проектов · Production Manager</span>
+        <h1 data-i="hero.name">Говоров <br>Алексей<span class="patr">Евгеньевич</span></h1>
+        <p class="lead" data-i="hero.lead">Инженер-технолог, больше 10 лет в металлообработке. Провожу технологические аудиты производств, осваиваю новые изделия и довожу решения до серийного выпуска. Работаю с машиностроительными, приборостроительными и металлообрабатывающими предприятиями России и Беларуси.</p>
+        <dl class="block" data-i="hero.block">
+          <div><dt class="mono">Город</dt><dd>Санкт-Петербург</dd></div>
+          <div><dt class="mono">В отрасли</dt><dd>с 2015 года</dd></div>
+          <div><dt class="mono">Образование</dt><dd>СПбГМТУ, 2019</dd></div>
+          <div><dt class="mono">Сферы</dt><dd>Машиностроение, приборостроение, металлообработка</dd></div>
+          <div><dt class="mono">Языки</dt><dd>Русский, английский B2</dd></div>
+          <div><dt class="mono">Формат</dt><dd>На месте, гибрид, разъездная</dd></div>
+        </dl>
+      </div>
+      <figure class="photo">
+        <img src="img/portrait.webp" alt="Алексей Говоров в белой рубашке и чёрном галстуке, пиджак переброшен через плечо" data-ia="alt:hero.alt" width="1000" height="1500">
+        <figcaption class="mono" data-i="hero.cap">Санкт-Петербург</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="figures" aria-label="Ключевые результаты" data-ia="aria-label:fig.aria">
+    <div class="wrap">
+      <ul data-i="fig.list">
+        <li><span class="n">500+</span><span class="l">технологических аудитов производственных предприятий</span></li>
+        <li><span class="n">100+</span><span class="l">проектов освоения новых изделий до серийного производства</span></li>
+        <li><span class="n">60 млн ₽</span><span class="l">выигранных тендеров на инструмент и оснастку</span></li>
+        <li><span class="n">до 30%</span><span class="l">снижение себестоимости изготовления продукции</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="about">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i="about.h2">Обо мне</h2></div>
+      <div class="about">
+        <div data-i="about.text">
+          <p>Инженер-технолог и менеджер по продажам. Нестандартные задачи — основа моей работы: от специального инструмента до модернизации целых цехов.</p>
+          <p>Веду активный образ жизни и ставлю высокие цели. Творческий подход и врождённое любопытство помогают решать даже рутинные задачи с интересом, поэтому мотивация со временем не угасает.</p>
+        </div>
+        <blockquote class="credo" data-i="about.credo">
+          <span class="mono">Жизненное кредо</span>
+          <p class="credo-text">Мне не нужно многого. Достаточно самого лучшего.</p>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="career">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 data-i="career.h2">Карьера</h2>
+        <span class="mono" data-i="career.meta">Два места работы · Санкт-Петербург</span>
+      </div>
+
+      <article class="role">
+        <div class="when">
+          <span class="mono" data-i="r1.when">Март 2020 — настоящее время</span>
+          <span class="big" data-i="r1.big">С 2020</span>
+        </div>
+        <div>
+          <h3 data-i="r1.company">ООО «Компания МЕГАТУЛС»</h3>
+          <p class="title" data-i="r1.title">Менеджер по развитию производственных проектов</p>
+          <p class="mono where" data-i="r1.where">Металлорежущий инструмент и технологическая оснастка · Россия и Беларусь</p>
+          <p class="summary" data-i="r1.summary">Техническое сопровождение предприятий машиностроительной, приборостроительной и металлообрабатывающей отраслей. Разрабатываю и внедряю технологические решения, которые повышают производительность, снижают себестоимость обработки и делают процессы стабильнее. Параллельно веду продажи инструмента и оснастки.</p>
+
+          <div class="cols">
+            <div>
+              <h4 class="mono" data-i="r1.h.prod">Производство и технологии</h4>
+              <ul class="list" data-i="r1.prod">
+                <li>Провёл <strong>500+ комплексных технологических аудитов</strong> предприятий: находил резервы производительности, снижал себестоимость обработки, оптимизировал техпроцессы.</li>
+                <li>Реализовал <strong>100+ проектов освоения новых изделий</strong>: техпроцессы, подбор оборудования, инструмента и оснастки. Координировал производственные, финансовые и технические подразделения, работал с директорами и топ-менеджментом, запускал серийное производство.</li>
+                <li>Внедрял нестандартные технологические решения: меньше операций и <strong>снижение себестоимости до 30%</strong>.</li>
+                <li>Модернизировал <strong>3+ механообрабатывающих цеха (50+ единиц оборудования)</strong>: современная обработка на 3- и 5-осевых станках и на модернизированных универсальных станках советского производства.</li>
+                <li>Поднял производительность производства на <strong>50%</strong> за счёт современного контрольно-измерительного оборудования.</li>
+                <li>Провёл <strong>3 технических семинара</strong> для инженеров-технологов, операторов ЧПУ и производственных специалистов.</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="mono" data-i="r1.h.sales">Продажи и клиенты</h4>
+              <ul class="list" data-i="r1.sales">
+                <li>Выполнял годовой план на <strong>115%</strong>: внедрил систему регулярных технологических аудитов у заказчиков.</li>
+                <li>Вырастил портфель до <strong>150+ активных заказчиков</strong> и привлёк <strong>300+ новых клиентов</strong> в России и Беларуси: холодные продажи, 15 международных отраслевых выставок, рекомендации.</li>
+                <li>Выиграл тендеры на поставку инструмента и оснастки на <strong>60+ млн ₽</strong>.</li>
+                <li>Преодолел монополию действующих поставщиков в производственном концерне и занял <strong>до 30% закупочного бюджета</strong> по направлению.</li>
+                <li>Реализую проекты эксклюзивного инструмента на <strong>5+ млн ₽ в год</strong>.</li>
+                <li>Участвовал в выводе нового продукта на рынок: стратегия продвижения, испытания у заказчиков, первые коммерческие продажи.</li>
+                <li><strong>6 лет</strong> обеспечиваю бесперебойное снабжение стратегических заказчиков.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="when">
+          <span class="mono" data-i="r2.when">Декабрь 2015 — февраль 2020</span>
+          <span class="big" data-i="r2.big">4 года 3 мес</span>
+        </div>
+        <div>
+          <h3 data-i="r2.company">АО «Завод «Киров-Энергомаш»</h3>
+          <p class="title" data-i="r2.title">Инженер-технолог</p>
+          <p class="mono where" data-i="r2.where">Два механообрабатывающих цеха · 100+ станков · выручка завода 2+ млрд ₽ в год</p>
+          <p class="summary" data-i="r2.summary">Технологическое сопровождение двух цехов с парком больше 100 единиц металлообрабатывающего оборудования. Вклад в выполнение производственной программы завода.</p>
+
+          <ul class="list one" style="margin-top:28px" data-i="r2.list">
+            <li>Провёл аудит, оцифровку и оптимизацию <strong>2000+ технологических процессов</strong>: время подготовки к технологической операции сократилось <strong>в 3 раза</strong>.</li>
+            <li>Проанализировал операции и режимы обработки, актуализировал режимы резания: производительность <strong>+30%</strong>.</li>
+            <li>Разработал, внедрил и испытал в промышленных условиях <strong>200+ новых техпроцессов</strong>. Это открыло новую номенклатуру продукции и принесло <strong>10 новых контрактов</strong>.</li>
+            <li>Вместе со службой главного механика создал систему регламентного обслуживания оборудования: <strong>брак снизился на 15%</strong>, процессы стали стабильнее.</li>
+            <li>Работал с производственными подразделениями, службой качества, службой главного механика, программистами ЧПУ и поставщиками инструмента.</li>
+          </ul>
+        </div>
+      </article>
+
+      <div class="facts">
+        <div>
+          <h4 class="mono" data-i="edu.h">Образование</h4>
+          <p class="edu" data-i="edu.body"><strong>Санкт-Петербургский государственный морской технический университет</strong><span>2019 · ФКЭиА · Конструкторско-технологическое обеспечение на машиностроительном производстве</span></p>
+        </div>
+        <div>
+          <h4 class="mono" data-i="lang.h">Языки</h4>
+          <p class="edu" data-i="lang.ru"><strong>Русский</strong><span>родной</span></p>
+          <p class="edu" style="margin-top:10px" data-i="lang.en"><strong>Английский</strong><span>B2, средне-продвинутый</span></p>
+        </div>
+      </div>
+
+      <div class="skills">
+        <div>
+          <h4 class="mono" data-i="sk.h.prod">Производство</h4>
+          <ul class="tags" data-i="sk.prod">
+            <li>Станки с ЧПУ</li><li>Подбор оборудования</li><li>Выбор технологической оснастки</li><li>Технический контроль производства</li><li>Управление производством</li><li>Планирование</li><li>Компас-3D</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="mono" data-i="sk.h.sales">Проекты и продажи</h4>
+          <ul class="tags" data-i="sk.sales">
+            <li>Управление проектами</li><li>Управление продуктом</li><li>Вывод продукта на рынок</li><li>B2B и B2G продажи</li><li>Участие в тендерах</li><li>Ведение переговоров</li><li>Договорная работа</li><li>Работа с CRM</li><li>1С</li><li>MS Office</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="hobby">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i="hobby.h2">Хобби и увлечения</h2></div>
+      <div class="hobbies">
+        <article class="hobby" data-i="hobby.1">
+          <span class="num">2+ года</span>
+          <h3>Сценическая импровизация</h3>
+          <p>Больше двух лет занимаюсь импровизацией и выступаю на сцене без сценария. Это большой опыт публичных выступлений. Выходить к зрителям без заготовок значит собирать мысли на ходу, слышать партнёра и держать внимание зала. Эти навыки работают на переговорах и презентациях.</p>
+          <ul class="tags">
+            <li>Публичные выступления</li><li>Быстрые решения в неопределённости</li><li>Умение слушать и вести диалог</li>
+          </ul>
+        </article>
+        <article class="hobby" data-i="hobby.2">
+          <span class="num">42,2 км</span>
+          <h3>Спорт и походы</h3>
+          <p>Занимаюсь спортом и хожу в походы, в том числе в автономные: больше 10 дней без внешней поддержки. В 2025 году пробежал марафон. Подготовка к такой дистанции не терпит пропусков и отговорок: нужно планировать нагрузку и неделями идти по плану. Это приучает к высокой дисциплине и умению доводить начатое до конца.</p>
+          <ul class="tags">
+            <li>Высокая дисциплина</li><li>Системность</li><li>Выносливость</li><li>Автономность</li>
+          </ul>
+        </article>
+        <article class="hobby" data-i="hobby.3">
+          <span class="num">Организатор</span>
+          <h3>Организация мероприятий</h3>
+          <p>Организовывал выступления и нетворкинги для предпринимателей. Этот опыт дополняет мои выступления на сцене и помогает выстраивать деловые контакты.</p>
+          <ul class="tags">
+            <li>Организация мероприятий</li><li>Нетворкинг</li><li>Деловые связи</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="contacts">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 data-i="contacts.h2">Контакты</h2>
+        <span class="mono" data-i="contacts.meta">Санкт-Петербург</span>
+      </div>
+      <ul class="contacts">
+        <li class="contact">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+          <span class="mono" data-i="c.phone">Телефон</span>
+          <span class="value" id="v-phone">+7 (952) 240-93-21</span>
+          <button class="act" type="button" data-copy="v-phone" data-i="c.copy">Копировать</button>
+        </li>
+        <li class="contact">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14"/><path d="M3 6l9 7 9-7"/></svg>
+          <span class="mono" data-i="c.mail">Электронная почта</span>
+          <span class="value" id="v-mail">alex_govorov97@mail.ru</span>
+          <button class="act" type="button" data-copy="v-mail" data-i="c.copy">Копировать</button>
+        </li>
+        <li class="contact">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4L3 11l6 2 2 6 3-4 5 3z"/><path d="M9 13l12-9"/></svg>
+          <span class="mono">Telegram</span>
+          <span class="value">@alexey_govorov</span>
+          <a class="act" href="https://t.me/alexey_govorov" target="_blank" rel="noopener" data-i="c.tg">Открыть в Telegram</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span class="mono" data-i="foot.name">Алексей Говоров</span>
+    <span class="mono" data-i="foot.city">Санкт-Петербург · 2026</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var EN = {
+    "mark": "A. Govorov<span>.</span>",
+    "nav.aria": "Sections",
+    "lang.aria": "Language",
+    "nav.about": "About me",
+    "nav.career": "Career",
+    "nav.hobby": "Hobbies",
+    "nav.contacts": "Contact",
+    "hero.eyebrow": "Head of Manufacturing Projects · Production Manager",
+    "hero.name": "Govorov <br>Alexey<span class='patr'>Evgenyevich</span>",
+    "hero.lead": "Process engineer with over 10 years in metalworking. I run technological audits of production sites, launch new products and take solutions through to serial production. I work with machine-building, instrument-making and metalworking companies in Russia and Belarus.",
+    "hero.block": "<div><dt class='mono'>City</dt><dd>Saint Petersburg</dd></div><div><dt class='mono'>In the industry</dt><dd>Since 2015</dd></div><div><dt class='mono'>Education</dt><dd>SMTU, 2019</dd></div><div><dt class='mono'>Sectors</dt><dd>Machine building, instrument making, metalworking</dd></div><div><dt class='mono'>Languages</dt><dd>Russian, English B2</dd></div><div><dt class='mono'>Work format</dt><dd>On-site, hybrid, travel</dd></div>",
+    "hero.alt": "Alexey Govorov in a white shirt and black tie, with a jacket slung over his shoulder",
+    "hero.cap": "Saint Petersburg",
+    "fig.aria": "Key results",
+    "fig.list": "<li><span class='n'>500+</span><span class='l'>technological audits of manufacturing plants</span></li><li><span class='n'>100+</span><span class='l'>new-product launch projects through to serial production</span></li><li><span class='n'>₽60M</span><span class='l'>in tenders won for cutting tools and tooling</span></li><li><span class='n'>up to 30%</span><span class='l'>reduction in product manufacturing cost</span></li>",
+    "about.h2": "About me",
+    "about.text": "<p>Process engineer and sales manager. Non-standard problems are the core of my work: from custom tooling to modernizing entire machining shops.</p><p>I lead an active lifestyle and set high goals. A creative approach and natural curiosity let me take on even routine tasks with interest, so my motivation does not fade over time.</p>",
+    "about.credo": "<span class='mono'>Life motto</span><p class='credo-text'>I don't need much. The very best is enough.</p>",
+    "career.h2": "Career",
+    "career.meta": "Two employers · Saint Petersburg",
+    "r1.when": "March 2020 – present",
+    "r1.big": "Since 2020",
+    "r1.company": "MEGATOOLS Company LLC",
+    "r1.title": "Manufacturing Projects Development Manager",
+    "r1.where": "Cutting tools and tooling · Russia and Belarus",
+    "r1.summary": "Technical support for machine-building, instrument-making and metalworking companies in Russia and Belarus. I develop and implement technological solutions that raise productivity, cut machining cost and make processes more stable. I also sell cutting tools and tooling.",
+    "r1.h.prod": "Production and technology",
+    "r1.prod": "<li>Conducted <strong>500+ comprehensive technological audits</strong> of plants: found productivity reserves, cut machining cost and optimized processes.</li><li>Delivered <strong>100+ new-product launch projects</strong>: process planning, selection of equipment, cutting tools and tooling. Coordinated production, finance and engineering departments, worked with plant directors and top management, and launched serial production.</li><li>Introduced non-standard technological solutions: fewer operations and <strong>manufacturing cost reduced by up to 30%</strong>.</li><li>Modernized <strong>3+ machining shops (50+ machines)</strong>: modern machining on 3- and 5-axis machines and on upgraded Soviet-era universal machines.</li><li>Raised plant productivity by <strong>50%</strong> with modern inspection and measuring equipment.</li><li>Ran <strong>3 technical seminars</strong> for process engineers, CNC operators and production staff.</li>",
+    "r1.h.sales": "Sales and clients",
+    "r1.sales": "<li>Hit <strong>115%</strong> of the annual sales plan by introducing regular technological audits at customer sites.</li><li>Grew the portfolio to <strong>150+ active customers</strong> and won <strong>300+ new clients</strong> in Russia and Belarus through cold outreach, 15 international industry exhibitions and referrals.</li><li>Won tenders for cutting tools and tooling worth <strong>RUB 60M+</strong>.</li><li>Broke the incumbent suppliers' monopoly at a manufacturing group and secured <strong>up to 30% of its purchasing budget</strong> in the category.</li><li>Deliver special-tooling projects worth <strong>RUB 5M+ per year</strong>.</li><li>Took part in launching a new product: promotion strategy, trials at customer plants, first commercial sales.</li><li>For <strong>6 years</strong> I have kept strategic customers supplied without interruption.</li>",
+    "r2.when": "December 2015 – February 2020",
+    "r2.big": "4 years 3 mo",
+    "r2.company": "Kirov-Energomash Plant JSC",
+    "r2.title": "Process Engineer",
+    "r2.where": "Two machining shops · 100+ machines · plant revenue RUB 2B+ per year",
+    "r2.summary": "Technological support of two shops with a fleet of over 100 metalworking machines. Contributed to delivering the plant's production program.",
+    "r2.list": "<li>Audited, digitized and optimized <strong>2,000+ technological processes</strong>: operation setup time dropped <strong>3x</strong>.</li><li>Analyzed operations and machining modes and updated cutting parameters: productivity <strong>+30%</strong>.</li><li>Developed, implemented and trialed in production <strong>200+ new technological processes</strong>. This opened a new product range and brought <strong>10 new contracts</strong>.</li><li>Together with the chief mechanic's department built a scheduled equipment maintenance system: <strong>scrap fell by 15%</strong> and processes became more stable.</li><li>Worked with production units, the quality department, the chief mechanic's department, CNC programmers and tool suppliers.</li>",
+    "edu.h": "Education",
+    "edu.body": "<strong>St. Petersburg State Marine Technical University</strong><span>2019 · Faculty of Marine Power Engineering and Automation · Design and technological support of machine-building production</span>",
+    "lang.h": "Languages",
+    "lang.ru": "<strong>Russian</strong><span>native</span>",
+    "lang.en": "<strong>English</strong><span>B2, upper-intermediate</span>",
+    "sk.h.prod": "Production",
+    "sk.prod": "<li>CNC machines</li><li>Equipment selection</li><li>Tooling selection</li><li>Production quality control</li><li>Production management</li><li>Planning</li><li>KOMPAS-3D</li>",
+    "sk.h.sales": "Projects and sales",
+    "sk.sales": "<li>Project management</li><li>Product management</li><li>Go-to-market</li><li>B2B and B2G sales</li><li>Tenders</li><li>Negotiation</li><li>Contract work</li><li>CRM</li><li>1C</li><li>MS Office</li>",
+    "hobby.h2": "Hobbies and interests",
+    "hobby.1": "<span class='num'>2+ years</span><h3>Stage improvisation</h3><p>I have been doing improv for over two years and perform on stage without a script. It gives me substantial public speaking experience. Going out to an audience without prepared lines means thinking on the fly, listening to your partner and holding the room. These skills work in negotiations and presentations.</p><ul class='tags'><li>Public speaking</li><li>Quick decisions under uncertainty</li><li>Listening and leading a dialogue</li></ul>",
+    "hobby.2": "<span class='num'>42.2 km</span><h3>Sports and hiking</h3><p>I play sports and go hiking, including self-supported trips of more than 10 days without outside help. In 2025 I ran a marathon. Training for that distance leaves no room for skipped sessions or excuses: you plan your load and stick to the plan for weeks. It builds strong discipline and the habit of finishing what you start.</p><ul class='tags'><li>High discipline</li><li>Systematic approach</li><li>Endurance</li><li>Self-reliance</li></ul>",
+    "hobby.3": "<span class='num'>Organizer</span><h3>Event organizing</h3><p>I have organized talks and networking events for entrepreneurs. This experience complements my stage performances and helps me build business connections.</p><ul class='tags'><li>Event organizing</li><li>Networking</li><li>Business connections</li></ul>",
+    "contacts.h2": "Contact",
+    "contacts.meta": "Saint Petersburg",
+    "c.phone": "Phone",
+    "c.mail": "Email",
+    "c.copy": "Copy",
+    "c.tg": "Open in Telegram",
+    "foot.name": "Alexey Govorov",
+    "foot.city": "Saint Petersburg · 2026",
+    "msg.copied": "Copied",
+    "msg.selected": "Selected"
+  };
+  var RU = { "msg.copied": "Скопировано", "msg.selected": "Выделено" };
+  var TITLE = { ru: "Алексей Говоров", en: "Alexey Govorov" };
+  var current = "ru";
+
+  var htmlEls = Array.prototype.slice.call(document.querySelectorAll("[data-i]"));
+  var attrEls = Array.prototype.slice.call(document.querySelectorAll("[data-ia]"));
+  htmlEls.forEach(function (el) {
+    var k = el.getAttribute("data-i");
+    if (!(k in RU)) RU[k] = el.innerHTML;
+  });
+  attrEls.forEach(function (el) {
+    var p = el.getAttribute("data-ia").split(":");
+    if (!(p[1] in RU)) RU[p[1]] = el.getAttribute(p[0]);
+  });
+
+  function tr(key) { return (current === "en" ? EN : RU)[key]; }
+
+  var switches = Array.prototype.slice.call(document.querySelectorAll("[data-lang]"));
+  function apply(lang) {
+    current = lang;
+    htmlEls.forEach(function (el) {
+      var v = tr(el.getAttribute("data-i"));
+      if (v != null) el.innerHTML = v;
+    });
+    attrEls.forEach(function (el) {
+      var p = el.getAttribute("data-ia").split(":");
+      var v = tr(p[1]);
+      if (v != null) el.setAttribute(p[0], v);
+    });
+    document.documentElement.lang = lang;
+    document.title = TITLE[lang];
+    switches.forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false");
+    });
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+
+  switches.forEach(function (b) {
+    b.addEventListener("click", function () { apply(b.getAttribute("data-lang")); });
+  });
+
+  var timers = new WeakMap();
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    var el = document.getElementById(btn.getAttribute("data-copy"));
+    function flash(msg) {
+      btn.textContent = msg;
+      clearTimeout(timers.get(btn));
+      timers.set(btn, setTimeout(function () { btn.innerHTML = tr(btn.getAttribute("data-i")); }, 1800));
+    }
+    function select() {
+      var r = document.createRange();
+      r.selectNodeContents(el);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+      flash(tr("msg.selected"));
+    }
+    btn.addEventListener("click", function () {
+      try {
+        navigator.clipboard.writeText(el.textContent.trim()).then(function () { flash(tr("msg.copied")); }, select);
+      } catch (e) { select(); }
+    });
+  });
+
+  var start = "";
+  try { start = localStorage.getItem("lang") || ""; } catch (e) {}
+  if (start !== "ru" && start !== "en") start = /^ru/i.test(navigator.language || "") ? "ru" : "en";
+  apply(start);
+})();
+</script>
+</body>
+</html>
